@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/plugins/HVLSP_merge_packages" >
+        <file>import.png</file>
+    </qresource>
+    <qresource prefix="/plugins/HVLSP_merge_packages" >
+        <file>remove.png</file>
+    </qresource>
+    <qresource prefix="/plugins/HVLSP_merge_packages" >
+        <file>save.png</file>
+    </qresource>
+    <qresource prefix="/plugins/HVLSP_merge_packages" >
+        <file>treatments.png</file>
+    </qresource>
+    <qresource prefix="/plugins/HVLSP_merge_packages" >
+        <file>informations.png</file>
+    </qresource>
+</RCC>
