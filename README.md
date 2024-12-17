@@ -1,2 +1,2 @@
 # hvlsp_merge_packages
-This plugin merge HVLSP Geopackage files
+This plugin merges HVLSP Geopackage files
