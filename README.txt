@@ -1,7 +1,7 @@
 Plugin Builder Results
 
-Your plugin HVLSPMergePackages was created in:
-    C:/Users/epeyrouse/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins\hvlsp_merge_packages
+Your plugin HVLSPMergesPackages was created in:
+    C:/Users/epeyrouse/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins\hvlsp_merges_packages
 
 Your QGIS plugin directory is located at:
     C:/Users/epeyrouse/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins
@@ -17,11 +17,11 @@ What's Next:
 
   * Test the plugin by enabling it in the QGIS plugin manager
 
-  * Customize it by editing the implementation file: ``HVLSP_merge_packages.py``
+  * Customize it by editing the implementation file: ``HVLSP_merges_packages.py``
 
   * Create your own custom icon, replacing the default icon.png
 
-  * Modify your user interface by opening HVLSPMergePackages_dialog_base.ui in Qt Designer
+  * Modify your user interface by opening HVLSPMergesPackages_dialog_base.ui in Qt Designer
 
   * You can use the Makefile to compile your Ui and resource files when
     you make changes. This requires GNU make (gmake)
