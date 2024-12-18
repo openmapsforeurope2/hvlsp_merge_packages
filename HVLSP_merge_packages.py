@@ -99,18 +99,20 @@ class HVLSPMergePackages:
     def __isProjectRegistered(self) -> bool:
         self.__homePath = QgsProject.instance().homePath()
         if self.__homePath == "":
-            HVLSPMergePackages.showMessageBox("Your QGIS project must be saved before "
-                                              "you can use the HVLSP_merge_packages plugin")
+            message = "Your QGIS project must be saved before you can use the HVLSP_merge_packages plugin"
+            HVLSPMergePackages.showMessageBox(message)
+            self.printAndLogging("{}\n".format(message))
             return False
         return True
 
-    @staticmethod
-    def __isGroupInProjectLayers() -> bool:
+    def __isGroupInProjectLayers(self) -> bool:
         root = QgsProject.instance().layerTreeRoot()
         nodesGroup = root.findGroups()
         if len(nodesGroup) >= 1:
-            HVLSPMergePackages.showMessageBox("Your project contains layers with group names, to use the plugin,"
-                                              " you must delete the group(s) or open a new project")
+            message = "Your project contains layers with group names, to use the plugin, " \
+                      "you must delete the group(s) or open a new project"
+            HVLSPMergePackages.showMessageBox(message)
+            self.printAndLogging("{}\n".format(message))
             return True
         return False
 
@@ -205,35 +207,35 @@ class HVLSPMergePackages:
 
     def initGui(self) -> None:
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-        iconPath = ':/plugins/HVLSP_merge_packages/icons/import.png'
+        iconPath = ':/plugins/HVLSPMergePackages/icons/import.png'
         self.addAction(
             iconPath,
             text=self.tr(u'Import Geopackage files'),
             callback=self.importing,
             parent=self.iface.mainWindow())
 
-        iconPath = ':/plugins/HVLSP_merge_packages/icons/remove.png'
+        iconPath = ':/plugins/HVLSPMergePackages/icons/remove.png'
         self.addAction(
             iconPath,
             text=self.tr(u'Merge layers and remove duplicates objects'),
             callback=self.mergeLayersAndRemoveDuplicates,
             parent=self.iface.mainWindow())
 
-        iconPath = ':/plugins/HVLSP_merge_packages/icons/save.png'
+        iconPath = ':/plugins/HVLSPMergePackages/icons/save.png'
         self.addAction(
             iconPath,
             text=self.tr(u'Save layers into Geopackage files'),
             callback=self.saveLayers,
             parent=self.iface.mainWindow())
 
-        iconPath = ':/plugins/HVLSP_merge_packages/icons/treatments.png'
+        iconPath = ':/plugins/HVLSPMergePackages/icons/treatments.png'
         self.addAction(
             iconPath,
             text=self.tr(u'Launch all treatments consecutively'),
             callback=self.launchAllTreatments,
             parent=self.iface.mainWindow())
 
-        iconPath = ':/plugins/HVLSP_merge_packages/icons/informations.png'
+        iconPath = ':/plugins/HVLSPMergePackages/icons/informations.png'
         self.addAction(
             iconPath,
             text=self.tr(u'Open user manual'),
@@ -262,7 +264,7 @@ class HVLSPMergePackages:
             if not self.importing():
                 return
             self.mergeLayersAndRemoveDuplicates()
-            self.saveLayers("result")
+            self.saveLayers()
         except Exception as e:
             self.printAndLogging(e)
             QApplication.setOverrideCursor(Qt.CursorShape.ArrowCursor)
@@ -281,7 +283,7 @@ class HVLSPMergePackages:
         if not self.__isProjectRegistered():
             return False
 
-        if HVLSPMergePackages.__isGroupInProjectLayers():
+        if self.__isGroupInProjectLayers():
             return False
 
         # if log file exist then log file is remove and start a new log file
@@ -347,13 +349,14 @@ class HVLSPMergePackages:
         # Is the project registered
         if not self.__isProjectRegistered():
             return
-        if HVLSPMergePackages.__isGroupInProjectLayers():
+        if self.__isGroupInProjectLayers():
             return
-        self.__runMergeLayers()
+        if not self.__runMergeLayers():
+            return
         self.__runRemoveDuplicates()
 
     # Merge all layers
-    def __runMergeLayers(self) -> None:
+    def __runMergeLayers(self) -> bool:
         startTotal = time.time()
         textMerge = 'Merge all layers...'
         self.printAndLogging(textMerge)
@@ -361,6 +364,9 @@ class HVLSPMergePackages:
         result = HVLSPMergePackages.selectDistinctLayers()
         distinctLayerNames = result[0]
         groupedLayersByName = result[1]
+        if len(distinctLayerNames) == 0 and len(groupedLayersByName) == 0:
+            self.printAndLogging("No layers to merge. Process stopped.\n")
+            return False
         self.printAndLogging('Total number of distinct layers : {}'.format(len(distinctLayerNames)))
         # Merge all layers
         self.__mergeLayers(distinctLayerNames, groupedLayersByName, textMerge)
@@ -374,6 +380,7 @@ class HVLSPMergePackages:
         timeResultTotal = endTotal - startTotal
         self.printAndLogging(
             'All layers have been merged in {} minutes.\n'.format(round(timeResultTotal / 60)))
+        return True
 
     def __runRemoveDuplicates(self) -> None:
         startTotal = time.time()
@@ -413,11 +420,11 @@ class HVLSPMergePackages:
             'All duplicates have been removed in {} minutes.\n'.format(round(timeResultTotal / 60)))
         self.__progress.close()
 
-    def saveLayers(self, fileName) -> None:
+    def saveLayers(self) -> None:
         # Is the project registered
         if not self.__isProjectRegistered():
             return
-        if HVLSPMergePackages.__isGroupInProjectLayers():
+        if self.__isGroupInProjectLayers():
             return
         start = time.time()
         textSave = 'Save all layers in Geopackage file...'
@@ -427,9 +434,13 @@ class HVLSPMergePackages:
         for qgsLayersTreeNode in QgsProject.instance().layerTreeRoot().children():
             qgsMapLayers = QgsProject.instance().mapLayersByName(qgsLayersTreeNode.name())
             layersToSaveInGpkg.append(qgsMapLayers[0])
-        fileNameGpkg = '{}/{}.gpkg'.format(self.__homePath, fileName)
+        fileNameGpkg = '{}/result.gpkg'.format(self.__homePath)
         self.printAndLogging(fileNameGpkg)
         self.__progress.setValue(1)
+        if len(layersToSaveInGpkg) == 0:
+            self.printAndLogging("No layers to save. Process stopped.\n")
+            self.__progress.close()
+            return
         params = {'LAYERS': layersToSaveInGpkg,
                   'OUTPUT': fileNameGpkg,
                   'OVERWRITE': True,
@@ -482,13 +493,13 @@ class HVLSPMergePackages:
             HVLSPMergePackages.showMessageBox(message)
             return False
         messageBis = 'Local disk (in Go) -> available : {0}, used : {1}, free : {2}, Size of selected files : {3}, ' \
-                     'Disk space required : {4}\n'.format(HVLSPMergePackages.octetsToGigaOctets(diskUsage.available),
+                     'Disk space required : {4}'.format(HVLSPMergePackages.octetsToGigaOctets(diskUsage.available),
                                                           HVLSPMergePackages.octetsToGigaOctets(diskUsage.used),
                                                           HVLSPMergePackages.octetsToGigaOctets(diskUsage.free),
                                                           HVLSPMergePackages.octetsToGigaOctets(sizeFiles),
                                                           HVLSPMergePackages.octetsToGigaOctets(diskSpaceRequired))
         self.printAndLogging(messageBis)
-        self.printAndLogging("Space needed for 3 temporary versions of the files, plus margin of security (33%)")
+        self.printAndLogging("Space needed for 3 temporary versions of the files, plus margin of security (33%)\n")
         return True
 
     @staticmethod

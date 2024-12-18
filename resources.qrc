@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/hvlsp_merge_packages">
+    <qresource prefix="/plugins/HVLSPMergePackages" >
         <file>icons/import.png</file>
         <file>icons/remove.png</file>
         <file>icons/save.png</file>
