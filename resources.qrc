@@ -1,17 +1,9 @@
 <RCC>
-    <qresource prefix="/plugins/HVLSP_merges_packages/icons">
-        <file>import.png</file>
-    </qresource>
-    <qresource prefix="/plugins/HVLSP_merges_packages/icons">
-        <file>remove.png</file>
-    </qresource>
-    <qresource prefix="/plugins/HVLSP_merges_packages/icons">
-        <file>save.png</file>
-    </qresource>
-    <qresource prefix="/plugins/HVLSP_merges_packages/icons">
-        <file>treatments.png</file>
-    </qresource>
-    <qresource prefix="/plugins/HVLSP_merges_packages/icons">
-        <file>informations.png</file>
+    <qresource prefix="/plugins/hvlsp_merge_packages">
+        <file>icons/import.png</file>
+        <file>icons/remove.png</file>
+        <file>icons/save.png</file>
+        <file>icons/treatments.png</file>
+        <file>icons/informations.png</file>
     </qresource>
 </RCC>

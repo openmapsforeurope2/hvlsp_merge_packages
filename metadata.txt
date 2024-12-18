@@ -5,12 +5,12 @@
 [general]
 name=HVLSP merge packages
 qgisMinimumVersion=3.0
-description=This plugin merge HVLSP Geopackage files
+description=This plugin merges HVLSP Geopackage files
 version=0.1
 author=IGN
 email=guillaume.valtat@ign.fr
 
-about=This plugin merge HVLSP Geopackage files
+about=This plugin merges HVLSP Geopackage files
 
 tracker=http://bugs
 repository=http://repo
