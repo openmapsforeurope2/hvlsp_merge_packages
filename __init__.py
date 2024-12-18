@@ -26,7 +26,7 @@
 
 # noinspection PyPep8Naming
 def classFactory(iface):  # pylint: disable=invalid-name
-    """Load HVLSPMergesPackages class from file HVLSPMergesPackages.
+    """Load HVLSPMergePackages class from file HVLSPMergePackages.
 
     :param iface: A QGIS interface instance.
     :type iface: QgsInterface
