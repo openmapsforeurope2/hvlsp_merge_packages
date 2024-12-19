@@ -6,7 +6,7 @@
 name=HVLSP merge packages
 qgisMinimumVersion=3.0
 description=This plugin merges HVLSP Geopackage files
-version=1.0
+version=1.0.0
 author=IGN
 email=ome2_project@ign.fr
 
