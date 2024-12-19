@@ -34,7 +34,7 @@ from qgis import processing
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QMessageBox
-from qgis.core import QgsProject, QgsVectorLayer, QgsApplication
+from qgis.core import *
 from .HVLSP_merge_packages_dialog import HVLSPMergePackagesDialog
 from .ProgressBar import ProgressBar
 

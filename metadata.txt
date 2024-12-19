@@ -10,7 +10,7 @@ version=1.0.0
 author=IGN
 email=ome2_project@ign.fr
 
-about=This plugin merges Geopackage files of high-value large-scale (HVLSP) data provided by the OME2 project.
+about=This plugin merges Geopackage files of high-value large-scale (HVLSP) data provided by the OME2 project
 
 tracker=https://github.com/openmapsforeurope2/hvlsp_merge_packages/issues
 repository=https://github.com/openmapsforeurope2/hvlsp_merge_packages
@@ -40,7 +40,7 @@ deprecated=False
 # plugin_dependencies=
 
 Category of the plugin: Raster, Vector, Database or Web
-category=Vector
+# category=
 
 # If the plugin can run on QGIS Server.
 server=False
