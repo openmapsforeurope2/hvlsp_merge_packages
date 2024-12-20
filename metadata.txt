@@ -5,7 +5,7 @@
 [general]
 name=HVLSP merge packages
 qgisMinimumVersion=3.0
-description=This plugin merges HVLSP Geopackage files
+description=This plugin merges high-value large-scale Geopackage files provided by the Open maps for Europe 2 (OME2) project.
 version=1.0.0
 author=IGN
 email=ome2_project@ign.fr
