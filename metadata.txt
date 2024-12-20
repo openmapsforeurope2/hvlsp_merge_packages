@@ -10,7 +10,7 @@ version=1.0.0
 author=IGN
 email=ome2_project@ign.fr
 
-about=This plugin merges Geopackage files of high-value large-scale (HVLSP) data provided by the OME2 project
+about=The Open Maps for Europe 2 (OME2) project aims at providing a high-value large-scale dataset, which can be downloaded as geopackages covering countries or regions. This plugin, developed by IGN-France on behalf of the OME2 project, aims at merging such gpkg files in order to get one seamless geopackage. OME2 has received funding from the European Union’s Digital Europe programme under grant agreement No 101100625.
 
 tracker=https://github.com/openmapsforeurope2/hvlsp_merge_packages/issues
 repository=https://github.com/openmapsforeurope2/hvlsp_merge_packages
